@@ -12,6 +12,10 @@ class SprintService:
         return db.query(Sprint).filter(Sprint.id == sprint_id, Sprint.deleted_at.is_(None)).first()
 
     @staticmethod
+    def get_by_project(db: Session, project_id: str):
+        return db.query(Sprint).filter(Sprint.project_id == project_id, Sprint.deleted_at.is_(None)).all()
+
+    @staticmethod
     def create(db: Session, sprint: SprintCreate):
         sprint_data = sprint.model_dump(exclude={"task_ids"})
         db_sprint = Sprint(**sprint_data)

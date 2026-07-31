@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from api.routes import projects, tasks, teams, clients, programs, time_entries, invoices, auth, users, portfolios, sprints, workflow_statuses, custom_filters, notifications, task_attachments, roles, email_config, analytics, template_statuses
+from api.routes import projects, tasks, teams, clients, programs, time_entries, invoices, auth, users, portfolios, sprints, workflow_statuses, custom_filters, notifications, task_attachments, roles, email_config, analytics, template_statuses, external_users
 
 api_router = APIRouter()
 
@@ -7,6 +7,7 @@ api_router.include_router(auth.router, prefix="/auth", tags=["auth"])
 from api.routes import password_reset
 api_router.include_router(password_reset.router, prefix="/auth", tags=["auth"])
 api_router.include_router(users.router, prefix="/users", tags=["users"])
+api_router.include_router(external_users.router, prefix="/external/users", tags=["external-users"])
 api_router.include_router(analytics.router, prefix="/analytics", tags=["analytics"])
 
 api_router.include_router(projects.router, prefix="/projects", tags=["projects"])

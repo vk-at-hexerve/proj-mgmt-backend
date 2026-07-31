@@ -9,6 +9,7 @@ class MCPSettings(BaseSettings):
     # API Backend URL
     PMTOOL_API_BASE_URL: str
     PMTOOL_API_TOKEN: str = ""
+    PMTOOL_EXTERNAL_API_KEY: str = ""
     
     # MCP Server Identity Settings
     MCP_NAME: str = "PMTool"
