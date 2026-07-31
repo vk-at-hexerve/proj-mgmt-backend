@@ -128,3 +128,21 @@ def require_any_permission(*permissions: str):
 
     return checker
 
+from fastapi.security import APIKeyHeader
+from core.config import settings
+
+api_key_header = APIKeyHeader(name="X-API-Key", auto_error=True)
+
+def verify_external_api_key(api_key: str = Depends(api_key_header)) -> str:
+    """Verify the external system's API key."""
+    if not settings.EXTERNAL_API_KEY:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="External API integration is not configured",
+        )
+    if api_key != settings.EXTERNAL_API_KEY:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid API key",
+        )
+    return api_key

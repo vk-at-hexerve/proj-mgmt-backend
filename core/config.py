@@ -3,6 +3,9 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Project Management API"
     DATABASE_URL: str
+    
+    # External system API key for acessing Users API Endpoints
+    EXTERNAL_API_KEY: str = ""
 
     # ── SMTP / Email settings ────────────────────────────────────
     SMTP_HOST: str = ""

@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Column, String, Enum, ForeignKey, DateTime
+from sqlalchemy import Column, String, Enum, ForeignKey, DateTime, Integer
 from sqlalchemy.orm import relationship
 from core.database import Base
 from models.soft_delete_mixin import SoftDeleteMixin
@@ -13,6 +13,7 @@ class User(SoftDeleteMixin, Base):
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
     password_changed_at = Column(DateTime(timezone=True), nullable=True)
+    internal_user = Column(Integer, nullable=True)
 
     # New RBAC: default system-level role (quick lookup without joining user_roles)
     system_role_id = Column(

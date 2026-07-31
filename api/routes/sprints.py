@@ -29,6 +29,16 @@ def _emit_sprint_notification(event: NotificationEvent):
 def get_sprints(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     return SprintService.get_all(db)
 
+@router.get("/project/{project_id}", response_model=List[SprintResponse])
+def get_project_sprints(
+    project_id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+    checker = Depends(require_permission("sprints:read"))
+):
+    checker.check_scope("project", project_id)
+    return SprintService.get_by_project(db, project_id)
+
 @router.post("/", response_model=SprintResponse)
 def create_sprint(
     sprint: SprintCreate, 
@@ -52,7 +62,7 @@ def get_sprint(
     perm_service.check_permission(current_user.id, "sprints:read", "project", db_sprint.project_id)
     return db_sprint
 
-@router.put("/{sprint_id}", response_model=SprintResponse)
+@router.patch("/{sprint_id}", response_model=SprintResponse)
 def update_sprint(
     sprint_id: str,
     sprint: SprintUpdate,

@@ -15,8 +15,14 @@ class SprintBase(BaseModel):
 class SprintCreate(SprintBase):
     task_ids: Optional[List[str]] = None
 
-class SprintUpdate(SprintBase):
+class SprintUpdate(BaseModel):
     name: Optional[str] = None
+    goal: Optional[str] = None
+    status: Optional[str] = None
+    start_date: Optional[date] = None
+    end_date: Optional[date] = None
+    velocity: Optional[int] = None
+    project_id: Optional[str] = None
 
 class SprintResponse(SprintBase):
     id: str

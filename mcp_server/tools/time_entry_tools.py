@@ -64,11 +64,12 @@ def register_time_entry_tools(mcp):
             return json.dumps({"error": str(e)})
 
     @mcp.tool()
-    async def log_time(task_id: str, duration: int, description: Optional[str] = None) -> str:
+    async def log_time(task_id: str, user_id: str, duration: int, description: Optional[str] = None) -> str:
         """Manually log time spent on a task.
         
         Args:
             task_id: The UUID of the task.
+            user_id: The UUID of the user logging time.
             duration: Duration in minutes.
             description: Optional description of the work done.
             
@@ -77,7 +78,7 @@ def register_time_entry_tools(mcp):
         """
         client = get_client()
         try:
-            data = {"task_id": task_id, "duration": duration}
+            data = {"task_id": task_id, "user_id": user_id, "duration": duration}
             if description: data["description"] = description
             
             entry = await client.log_time(data)
